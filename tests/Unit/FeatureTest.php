@@ -51,6 +51,22 @@ class FeatureTest extends TestCase
     {
         $this->assertSame($this, SomeFeature::staticToggle());
     }
+
+    public function test_it_blows_up_when_trying_to_use_a_toggle_that_doesnt_exist()
+    {
+        $this->expectException(\ReflectionException::class);
+        $this->expectExceptionMessage('Method nope does not exist');
+
+        SomeFeature::new($this)->nope();
+    }
+
+    public function test_it_blows_up_when_a_toggle_method_calls_a_method_that_doesnt_exist()
+    {
+        $this->expectException(\ReflectionException::class);
+        $this->expectExceptionMessage('Method nope does not exist');
+
+        SomeFeature::new($this)->bustedToggle();
+    }
 }
 
 class SomeFeature extends Feature
@@ -60,7 +76,24 @@ class SomeFeature extends Feature
 
     public function toggles(): array
     {
-        return ['someToggle' => ['on' => 'whenSomeToggleIsOn', 'off' => 'whenSomeToggleIsOff'], 'anotherToggle' => ['on' => 'whenAnotherToggleIsOn', 'off' => 'whenAnotherToggleIsOff',], 'staticToggle' => ['on' => 'whenStaticToggleIsOn', 'off' => 'whenStaticToggleIsOff',],];
+        return [
+            'someToggle' => [
+                'on' => 'whenSomeToggleIsOn',
+                'off' => 'whenSomeToggleIsOff'
+            ],
+            'anotherToggle' => [
+                'on' => 'whenAnotherToggleIsOn',
+                'off' => 'whenAnotherToggleIsOff',
+            ],
+            'staticToggle' => [
+                'on' => 'whenStaticToggleIsOn',
+                'off' => 'whenStaticToggleIsOff',
+            ],
+            'bustedToggle' => [
+                'on' => 'whenBustedToggleIsOn',
+                'off' => 'whenBustedToggleIsOff',
+            ]
+        ];
     }
 
     public function enabled(): bool
@@ -114,5 +147,14 @@ class SomeFeature extends Feature
     public function whenStaticToggleIsOff(): TestCase
     {
         return $this->caller;
+    }
+
+    public function whenBustedToggleIsOn(): void
+    {
+    }
+
+    public function whenBustedToggleIsOff(): void
+    {
+        $this->nope();
     }
 }
