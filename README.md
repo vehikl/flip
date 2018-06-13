@@ -88,7 +88,8 @@ If you discover any security related issues, please email go@vehikl.com instead 
 
 ## Credits
 
-- [Colin DeCarlo][link-author]
+- [Colin DeCarlo][link-colin]
+- [Brad Brothers][link-brad]
 - [All Contributors][link-contributors]
 
 ## License
@@ -107,5 +108,6 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-scrutinizer]: https://scrutinizer-ci.com/g/vehikl/flip/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/vehikl/flip
 [link-downloads]: https://packagist.org/packages/vehikl/flip
-[link-author]: https://github.com/colindecarlo
+[link-colin]: https://github.com/colindecarlo
+[link-brad]: https://github.com/bbrothers
 [link-contributors]: ../../contributors

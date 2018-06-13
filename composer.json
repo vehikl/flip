@@ -14,7 +14,13 @@
             "name": "Colin DeCarlo",
             "email": "c.decarlo@vehikl.com",
             "homepage": "https://github.com/colindecarlo",
-            "role": "Developer"
+            "role": "Idea Man"
+        },
+        {
+            "name": "Brad Brothers",
+            "email": "b.brothers@vehikl.com",
+            "homepage": "https://github.com/bbrothers",
+            "role": "The Brains"
         }
     ],
     "require": {
