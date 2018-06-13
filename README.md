@@ -7,7 +7,7 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-Flip is a simple Feature Toggle implementation. Features are implemented as Traits and are mixed into
+Flip is a simple Feature Toggle implementation. Features are implemented as independent classes and are "mixed" into
 the class you want the feature to be exposed from.
 
 ## Install
