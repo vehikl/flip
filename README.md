@@ -21,7 +21,7 @@ $ composer require vehikl/flip
 ## Usage
 
 ``` php
-trait SomeFeature
+class SomeFeature extends \Vehikl\Flip\Feature
 {
     /**
      * Decides under which conditions this Feature is enabled
@@ -34,7 +34,7 @@ trait SomeFeature
     /**
      * Returns an array of available toggles for this feature
      */
-    public function features()
+    public function toggles()
     {
         return [
             'someToggle' => [
@@ -57,13 +57,15 @@ trait SomeFeature
 
 class SomeClass
 {
-    use SomeFeature;
+    use Vehikl\Flip\Featurable;
+    
+    protected $features = [SomeFeature::class];
     
     public function someBehaviour()
     {
         // no need for if/else blocks, just call the toggle using the
-        // Flip FeatureManager
-        return Flip::someToggle();
+        // `flip` helper
+        return $this->flip()->someToggle();
     }
 }
 ```
