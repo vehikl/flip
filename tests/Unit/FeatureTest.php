@@ -19,7 +19,7 @@ class FeatureTest extends TestCase
         $this->assertFalse((new SomeFeature($this))->hasToggle('missingToggle'));
     }
 
-    public function test_toggles_execute_the_on_method_when_the_feature_is_enabled()
+    public function test_toggles_executes_the_on_method_when_the_feature_is_enabled()
     {
         $feature = SomeFeature::new($this)->turnOn();
         $feature->someToggle();
@@ -27,7 +27,7 @@ class FeatureTest extends TestCase
         $this->assertEquals('whenOn', $feature->invokedMethod());
     }
 
-    public function test_toggles_execute_the_off_method_when_the_feature_is_disabled()
+    public function test_toggles_executes_the_off_method_when_the_feature_is_disabled()
     {
         $feature = SomeFeature::new($this)->turnOff();
         $feature->someToggle();
