@@ -62,19 +62,9 @@ abstract class Feature
     {
         // Could be extracted, but I wonder how reliable this would be?
         // Does it really improve the API that much?
-        $caller = function () {
-            foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 5) as $trace) {
-                if (! isset($trace['object']) or in_array(get_class($trace['object']), [Feature::class, static::class])) {
-                    continue;
-                }
+        $caller = Caller::guess();
 
-                return $trace['object'];
-            }
-
-            throw new \LogicException('No caller found.');
-        };
-
-        $instance = new static($caller());
+        $instance = new static($caller);
 
         return $instance->{$method}($arguments);
     }
