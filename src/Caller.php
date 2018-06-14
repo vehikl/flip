@@ -12,8 +12,8 @@ class Caller
      */
     public static function guess(): object
     {
-        foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 5) as $trace) {
-            if (! isset($trace['object']) || in_array(get_class($trace['object']), [Feature::class, static::class])) {
+        foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 10) as $trace) {
+            if (self::shouldIgnore($trace['object'] ?? null)) {
                 continue;
             }
 
@@ -21,5 +21,18 @@ class Caller
         }
 
         throw new \LogicException('No caller found.');
+    }
+
+    /**
+     * Determine if the guesser should ignore the passed object from the
+     * stack trace.
+     *
+     * @param $object
+     *
+     * @return bool
+     */
+    private static function shouldIgnore($object)
+    {
+        return $object == null || $object instanceof Feature;
     }
 }
