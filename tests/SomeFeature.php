@@ -13,7 +13,24 @@ class SomeFeature extends Feature
 
     public function toggles(): array
     {
-        return ['someToggle' => ['on' => 'whenSomeToggleIsOn', 'off' => 'whenSomeToggleIsOff'], 'anotherToggle' => ['on' => 'whenAnotherToggleIsOn', 'off' => 'whenAnotherToggleIsOff',], 'staticToggle' => ['on' => 'whenStaticToggleIsOn', 'off' => 'whenStaticToggleIsOff',], 'bustedToggle' => ['on' => 'whenBustedToggleIsOn', 'off' => 'whenBustedToggleIsOff',]];
+        return [
+            'someToggle' => [
+                'on' => 'whenSomeToggleIsOn',
+                'off' => 'whenSomeToggleIsOff'
+            ],
+            'anotherToggle' => [
+                'on' => 'whenAnotherToggleIsOn',
+                'off' => 'whenAnotherToggleIsOff'
+            ],
+            'staticToggle' => [
+                'on' => 'whenStaticToggleIsOn',
+                'off' => 'whenStaticToggleIsOff'
+            ],
+            'bustedToggle' => [
+                'on' => 'whenBustedToggleIsOn',
+                'off' => 'whenBustedToggleIsOff'
+            ]
+        ];
     }
 
     public function enabled(): bool

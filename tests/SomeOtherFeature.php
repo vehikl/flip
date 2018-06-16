@@ -8,7 +8,12 @@ class SomeOtherFeature extends Feature
 {
     public function toggles(): array
     {
-        return ['someOtherToggle' => ['on' => 'whenSomeOtherToggleIsOn', 'off' => 'whenSomeOtherToggleIsOff']];
+        return [
+            'someOtherToggle' => [
+                'on' => 'whenSomeOtherToggleIsOn',
+                'off' => 'whenSomeOtherToggleIsOff'
+            ]
+        ];
     }
 
     public function enabled(): bool
