@@ -1,15 +1,5 @@
 <?php
 
-namespace Vehikl\Flip {
-    function debug_backtrace($options = DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit = 0) {
-        global $trace;
-
-        return is_array($trace)
-            ? $trace
-            : \debug_backtrace($options, $limit);
-    }
-}
-
 namespace Vehikl\Flip\Tests\Unit {
 
     use Vehikl\Flip\Caller;
@@ -52,7 +42,7 @@ namespace Vehikl\Flip\Tests\Unit {
 
                 public function enabled(): bool
                 {
-                   return false;
+                    return false;
                 }
 
                 public function go()
@@ -63,5 +53,17 @@ namespace Vehikl\Flip\Tests\Unit {
 
             $this->assertSame($this, $feature->go());
         }
+    }
+}
+
+namespace Vehikl\Flip {
+
+    function debug_backtrace($options = DEBUG_BACKTRACE_PROVIDE_OBJECT, $limit = 0)
+    {
+        global $trace;
+
+        return is_array($trace)
+            ? $trace
+            : \debug_backtrace($options, $limit);
     }
 }
