@@ -7,7 +7,7 @@ class Flip
     private $class;
     private $features;
 
-    public function __construct(object $class, array $features = [])
+    public function __construct($class, array $features = [])
     {
         $this->class = $class;
         $this->features = $features;

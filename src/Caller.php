@@ -10,7 +10,7 @@ class Caller
      * @throws \LogicException
      * @return object
      */
-    public static function guess(): object
+    public static function guess()
     {
         foreach (debug_backtrace(DEBUG_BACKTRACE_PROVIDE_OBJECT, 10) as $trace) {
             if (self::shouldIgnore($trace['object'] ?? null)) {

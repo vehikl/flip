@@ -7,12 +7,12 @@ abstract class Feature
     protected $caller;
 
     // Maybe it's worth requiring an interface be applied?
-    public function __construct(object $caller)
+    public function __construct($caller)
     {
         $this->caller = $caller;
     }
 
-    public static function new(object $caller): Feature
+    public static function new($caller): Feature
     {
         return new static($caller);
     }
