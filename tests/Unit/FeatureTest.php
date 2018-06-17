@@ -4,6 +4,8 @@ namespace Vehikl\Flip\Tests\Unit;
 
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestCase;
+use Vehikl\Flip\Tests\NeedyFeature;
+use Vehikl\Flip\Tests\SomeDependency;
 use Vehikl\Flip\Tests\SomeFeature;
 
 class FeatureTest extends TestCase
@@ -74,5 +76,16 @@ class FeatureTest extends TestCase
         $this->expectExceptionMessage('Method nope does not exist');
 
         SomeFeature::new($this)->bustedToggle();
+    }
+
+    public function test_a_features_enabled_method_is_passed_the_parameters_it_depends_on()
+    {
+        $needyFeature = new NeedyFeature($this);
+
+        $this->assertFalse(SomeDependency::$injected);
+
+        $needyFeature->toggle();
+
+        $this->assertTrue(SomeDependency::$injected);
     }
 }

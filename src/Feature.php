@@ -2,6 +2,11 @@
 
 namespace Vehikl\Flip;
 
+use Illuminate\Container\Container;
+
+/**
+ * @method boolean enabled(...$params)
+ */
 abstract class Feature
 {
     protected $caller;
@@ -19,8 +24,6 @@ abstract class Feature
 
     abstract public function toggles(): array;
 
-    abstract public function enabled(): bool;
-
     public function hasToggle(string $method): bool
     {
         return array_key_exists($method, $this->toggles());
@@ -37,7 +40,8 @@ abstract class Feature
 
         if (array_key_exists($toggle, $toggles)) {
             // if $toggles was a class, it'd be a lot less error prone.
-            return $this->enabled() ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
+            $container = new Container;
+            return $container->call([$this, 'enabled']) ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
         }
 
         return $toggle;
