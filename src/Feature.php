@@ -48,7 +48,7 @@ abstract class Feature
         $methodToCall = $this->methodToCall($name);
 
         if (method_exists($this, $methodToCall)) {
-            return $this->{$methodToCall}();
+            return $this->{$methodToCall}(...$arguments);
         }
 
         // Probably easier to just expect a public method.

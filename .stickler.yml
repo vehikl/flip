@@ -1,5 +1,5 @@
 ---
 linters:
     phpcs:
-        standard: 'phpcs.xml'
+        standard: phpcs.xml
         fixer: true

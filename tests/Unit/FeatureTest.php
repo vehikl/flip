@@ -35,6 +35,14 @@ class FeatureTest extends TestCase
         $this->assertEquals('whenOff', $feature->invokedMethod());
     }
 
+    public function test_features_pass_method_parameters_to_toggles()
+    {
+        $feature = SomeFeature::new($this)->turnOn();
+        $feature->someParameterAcceptingToggle('param1', 'param2');
+
+        $this->assertEquals(['param1', 'param2'], $feature->parameters());
+    }
+
     public function test_feature_toggles_can_call_public_methods_on_the_class_they_are_mixed_into()
     {
         $feature = SomeFeature::new($this)->turnOn();

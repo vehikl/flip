@@ -10,6 +10,7 @@ class SomeFeature extends Feature
 {
     private $enabled = false;
     private $invokedMethod;
+    private $parameters;
 
     public function toggles(): array
     {
@@ -29,6 +30,10 @@ class SomeFeature extends Feature
             'bustedToggle' => [
                 'on' => 'whenBustedToggleIsOn',
                 'off' => 'whenBustedToggleIsOff'
+            ],
+            'someParameterAcceptingToggle' => [
+                'on' => 'whenSomeParameterAcceptingToggleIsOn',
+                'off' => 'whenSomeParameterAcceptingToggleIsOff'
             ]
         ];
     }
@@ -67,6 +72,11 @@ class SomeFeature extends Feature
         return $this->invokedMethod;
     }
 
+    public function parameters()
+    {
+        return $this->parameters;
+    }
+
     public function whenAnotherToggleIsOn(): string
     {
         return $this->toString();
@@ -93,5 +103,15 @@ class SomeFeature extends Feature
     public function whenBustedToggleIsOff(): void
     {
         $this->nope();
+    }
+
+    public function whenSomeParameterAcceptingToggleIsOn(...$params): void
+    {
+        $this->parameters = $params;
+    }
+
+    public function whenSomeParameterAcceptingToggleIsOff(...$params): void
+    {
+        $this->parameters = $params;
     }
 }
