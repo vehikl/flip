@@ -56,8 +56,7 @@ abstract class Feature
 
         if (array_key_exists($toggle, $toggles)) {
             // if $toggles was a class, it'd be a lot less error prone.
-            $container = new Container;
-            return $container->call([$this, 'enabled']) ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
+            return $this->container()->call([$this, 'enabled']) ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
         }
 
         return $toggle;
