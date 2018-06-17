@@ -1,0 +1,13 @@
+{
+  "name": "vehikl-flip",
+  "version": "0.0",
+  "description": "A Feature Toggle implementation",
+  "main": "index.js",
+  "repository": "git@github.com:vehikl/flip.git",
+  "author": "Colin DeCarlo <c.decarlo@vehikl.com>",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "vuepress": "^0.10.1"
+  }
+}
