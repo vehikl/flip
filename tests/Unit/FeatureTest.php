@@ -2,8 +2,10 @@
 
 namespace Vehikl\Flip\Tests\Unit;
 
+use Illuminate\Container\Container;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestCase;
+use Vehikl\Flip\Feature;
 use Vehikl\Flip\Tests\NeedyFeature;
 use Vehikl\Flip\Tests\SomeDependency;
 use Vehikl\Flip\Tests\SomeFeature;
@@ -87,5 +89,29 @@ class FeatureTest extends TestCase
         $needyFeature->toggle();
 
         $this->assertTrue(SomeDependency::$injected);
+    }
+
+    public function test_a_container_can_be_registered_with_the_feature()
+    {
+        $container = new Container;
+        Feature::registerContainer($container);
+        $someFeature = new SomeFeature($this);
+
+        $this->assertSame($container, $someFeature->container());
+    }
+
+    public function test_a_new_container_is_registered_by_default()
+    {
+        $someFeature = new SomeFeature($this);
+
+        $this->assertInstanceOf(Container::class, $someFeature->container());
+    }
+
+    public function test_the_same_container_is_always_returned()
+    {
+        $someFeature = new SomeFeature($this);
+        $container = $someFeature->container();
+
+        $this->assertSame($container, $someFeature->container());
     }
 }

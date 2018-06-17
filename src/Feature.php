@@ -9,6 +9,8 @@ use Illuminate\Container\Container;
  */
 abstract class Feature
 {
+    private static $container;
+
     protected $caller;
 
     // Maybe it's worth requiring an interface be applied?
@@ -23,6 +25,20 @@ abstract class Feature
     }
 
     abstract public function toggles(): array;
+
+    public static function registerContainer(Container $container): void
+    {
+        self::$container = $container;
+    }
+
+    public function container(): Container
+    {
+        if (! self::$container) {
+            self::registerContainer(new Container);
+        }
+
+        return self::$container;
+    }
 
     public function hasToggle(string $method): bool
     {
