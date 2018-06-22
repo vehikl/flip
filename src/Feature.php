@@ -2,8 +2,12 @@
 
 namespace Vehikl\Flip;
 
+/**
+ * @method boolean enabled(...$params)
+ */
 abstract class Feature
 {
+    private static $resolver;
     protected $caller;
 
     // Maybe it's worth requiring an interface be applied?
@@ -19,7 +23,19 @@ abstract class Feature
 
     abstract public function toggles(): array;
 
-    abstract public function enabled(): bool;
+    public static function registerResolver($resolver)
+    {
+        self::$resolver = $resolver;
+    }
+
+    public function resolver()
+    {
+        if (! self::$resolver) {
+            self::registerResolver(new DefaultResolver);
+        }
+
+        return self::$resolver;
+    }
 
     public function hasToggle(string $method): bool
     {
@@ -37,7 +53,7 @@ abstract class Feature
 
         if (array_key_exists($toggle, $toggles)) {
             // if $toggles was a class, it'd be a lot less error prone.
-            return $this->enabled() ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
+            return $this->resolver()->resolve($this, 'enabled') ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
         }
 
         return $toggle;

@@ -4,8 +4,14 @@ namespace Vehikl\Flip\Tests\Unit;
 
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestCase;
+use Vehikl\Flip\DefaultResolver;
+use Vehikl\Flip\Feature;
+use Vehikl\Flip\Resolver;
 use Vehikl\Flip\Tests\SomeFeature;
 
+/**
+ * @backupStaticAttributes enabled
+ */
 class FeatureTest extends TestCase
 {
     public function test_static_new_returns_new_instance()
@@ -74,5 +80,25 @@ class FeatureTest extends TestCase
         $this->expectExceptionMessage('Method nope does not exist');
 
         SomeFeature::new($this)->bustedToggle();
+    }
+
+    public function test_a_resolver_can_be_registered_with_the_feature()
+    {
+        $resolver = new class() implements Resolver {
+            public function resolve($object, string $method)
+            {
+            }
+        };
+        Feature::registerResolver($resolver);
+        $someFeature = new SomeFeature($this);
+
+        $this->assertSame($resolver, $someFeature->resolver());
+    }
+
+    public function test_the_default_flip_resolver_is_registered_by_default()
+    {
+        $someFeature = new SomeFeature($this);
+
+        $this->assertInstanceOf(DefaultResolver::class, $someFeature->resolver());
     }
 }
