@@ -10,7 +10,7 @@ use Illuminate\Container\Container;
 abstract class Feature
 {
     private static $container;
-
+    private static $resolver;
     protected $caller;
 
     // Maybe it's worth requiring an interface be applied?
@@ -40,6 +40,20 @@ abstract class Feature
         return self::$container;
     }
 
+    public static function registerResolver($resolver)
+    {
+        self::$resolver = $resolver;
+    }
+
+    public function resolver()
+    {
+        if (! self::$resolver) {
+            self::registerResolver(new DefaultResolver);
+        }
+
+        return self::$resolver;
+    }
+
     public function hasToggle(string $method): bool
     {
         return array_key_exists($method, $this->toggles());
@@ -56,7 +70,7 @@ abstract class Feature
 
         if (array_key_exists($toggle, $toggles)) {
             // if $toggles was a class, it'd be a lot less error prone.
-            return $this->container()->call([$this, 'enabled']) ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
+            return $this->resolver()->resolve($this, 'enabled') ? $toggles[$toggle]['on'] : $toggles[$toggle]['off'];
         }
 
         return $toggle;

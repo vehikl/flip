@@ -5,11 +5,16 @@ namespace Vehikl\Flip\Tests\Unit;
 use Illuminate\Container\Container;
 use PHPUnit\Framework\TestResult;
 use PHPUnit\Framework\TestCase;
+use Vehikl\Flip\DefaultResolver;
 use Vehikl\Flip\Feature;
+use Vehikl\Flip\Resolver;
 use Vehikl\Flip\Tests\NeedyFeature;
 use Vehikl\Flip\Tests\SomeDependency;
 use Vehikl\Flip\Tests\SomeFeature;
 
+/**
+ * @backupStaticAttributes enabled
+ */
 class FeatureTest extends TestCase
 {
     public function test_static_new_returns_new_instance()
@@ -80,15 +85,24 @@ class FeatureTest extends TestCase
         SomeFeature::new($this)->bustedToggle();
     }
 
-    public function test_a_features_enabled_method_is_passed_the_parameters_it_depends_on()
+    public function test_a_resolver_can_be_registered_with_the_feature()
     {
-        $needyFeature = new NeedyFeature($this);
+        $resolver = new class() implements Resolver {
+            public function resolve($object, string $method)
+            {
+            }
+        };
+        Feature::registerResolver($resolver);
+        $someFeature = new SomeFeature($this);
 
-        $this->assertFalse(SomeDependency::$injected);
+        $this->assertSame($resolver, $someFeature->resolver());
+    }
 
-        $needyFeature->toggle();
+    public function test_the_default_flip_resolver_is_registered_by_default()
+    {
+        $someFeature = new SomeFeature($this);
 
-        $this->assertTrue(SomeDependency::$injected);
+        $this->assertInstanceOf(DefaultResolver::class, $someFeature->resolver());
     }
 
     public function test_a_container_can_be_registered_with_the_feature()
