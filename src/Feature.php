@@ -2,14 +2,11 @@
 
 namespace Vehikl\Flip;
 
-use Illuminate\Container\Container;
-
 /**
  * @method boolean enabled(...$params)
  */
 abstract class Feature
 {
-    private static $container;
     private static $resolver;
     protected $caller;
 
@@ -25,20 +22,6 @@ abstract class Feature
     }
 
     abstract public function toggles(): array;
-
-    public static function registerContainer(Container $container): void
-    {
-        self::$container = $container;
-    }
-
-    public function container(): Container
-    {
-        if (! self::$container) {
-            self::registerContainer(new Container);
-        }
-
-        return self::$container;
-    }
 
     public static function registerResolver($resolver)
     {
