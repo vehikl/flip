@@ -1,6 +1,5 @@
 <?xml version="1.0"?>
 <ruleset name="Custom Standard">
-    <arg value="p"/>
     <config name="ignore_errors_on_exit" value="true"/>
     <config name="ignore_warnings_on_exit" value="true"/>
 
