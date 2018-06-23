@@ -42,8 +42,8 @@
     },
     "scripts": {
         "test": "phpunit",
-        "check-style": "phpcs --standard=./phpcs.xml",
-        "fix-style": "phpcbf --standard=./phpcs.xml"
+        "check-style": "phpcs --standard=./phpcs.xml -p",
+        "fix-style": "phpcbf --standard=./phpcs.xml -p"
     },
     "extra": {
         "branch-alias": {
