@@ -23,12 +23,12 @@ abstract class Feature
 
     abstract public function toggles(): array;
 
-    public static function registerResolver($resolver)
+    public static function registerResolver($resolver): void
     {
         self::$resolver = $resolver;
     }
 
-    public function resolver()
+    public function resolver(): Resolver
     {
         if (! self::$resolver) {
             self::registerResolver(new DefaultResolver);
