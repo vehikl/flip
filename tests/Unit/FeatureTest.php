@@ -84,8 +84,8 @@ class FeatureTest extends TestCase
 
     public function test_a_resolver_can_be_registered_with_the_feature()
     {
-        $resolver = new class() implements Resolver {
-            public function resolve($object, string $method)
+        $resolver = new class() extends Resolver {
+            public function resolve($feature, string $method)
             {
             }
         };
@@ -100,5 +100,17 @@ class FeatureTest extends TestCase
         $someFeature = new SomeFeature($this);
 
         $this->assertInstanceOf(DefaultResolver::class, $someFeature->resolver());
+    }
+
+    public function test_features_can_be_forced_to_on()
+    {
+
+        $someFeature = new SomeFeature($this);
+        $someFeature->alwaysOn();
+        $someFeature->turnOff();
+
+        $someFeature->someToggle();
+
+        $this->assertEquals('whenOn', $someFeature->invokedMethod());
     }
 }

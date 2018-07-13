@@ -7,8 +7,12 @@ namespace Vehikl\Flip;
  */
 abstract class Feature
 {
+    const ENABLED = 'enabled';
+    const DISABLED = 'disabled';
+
     private static $resolver;
     protected $caller;
+    protected $forceState;
 
     // Maybe it's worth requiring an interface be applied?
     public function __construct($caller)
@@ -83,5 +87,17 @@ abstract class Feature
         $instance = new static($caller);
 
         return $instance->{$method}($arguments);
+    }
+
+    public function alwaysOn() : Feature
+    {
+        $this->forceState = self::ENABLED;
+
+        return $this;
+    }
+
+    public function isAlwaysOn() : bool
+    {
+        return $this->forceState === self::ENABLED;
     }
 }

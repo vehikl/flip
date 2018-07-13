@@ -34,7 +34,11 @@ class SomeFeature extends Feature
             'someParameterAcceptingToggle' => [
                 'on' => 'whenSomeParameterAcceptingToggleIsOn',
                 'off' => 'whenSomeParameterAcceptingToggleIsOff'
-            ]
+            ],
+            'someRequiredParameterAcceptingToggle' => [
+                'on' => 'whenSomeRequiredParameterAcceptingToggleIsOn',
+                'off' => 'whenSomeRequiredParameterAcceptingToggleIsOff'
+            ],
         ];
     }
 
@@ -113,5 +117,13 @@ class SomeFeature extends Feature
     public function whenSomeParameterAcceptingToggleIsOff(...$params): void
     {
         $this->parameters = $params;
+    }
+
+    public function whenSomeRequiredParameterAcceptingToggleIsOn($someParameter) : void
+    {
+    }
+
+    public function whenSomeRequiredParameterAcceptingToggleIsOff($someParameter) : void
+    {
     }
 }
