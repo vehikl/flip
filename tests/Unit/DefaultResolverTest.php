@@ -14,7 +14,7 @@ class DefaultResolverTest extends TestCase
         $someFeature = new SomeFeature($this);
         $someFeature->turnOn();
 
-        $this->assertTrue((new DefaultResolver)->resolve($someFeature, 'someToggle'));
+        $this->assertEquals('whenOn', (new DefaultResolver)->resolve($someFeature, 'someToggle'));
     }
 
     public function test_it_throws_an_exception_when_the_resolved_method_does_have_dependencies()

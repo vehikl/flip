@@ -104,7 +104,6 @@ class FeatureTest extends TestCase
 
     public function test_features_can_be_forced_to_on()
     {
-
         $someFeature = new SomeFeature($this);
         $someFeature->alwaysOn();
         $someFeature->turnOff();
@@ -112,5 +111,16 @@ class FeatureTest extends TestCase
         $someFeature->someToggle();
 
         $this->assertEquals('whenOn', $someFeature->invokedMethod());
+    }
+
+    public function test_features_can_be_forced_to_off()
+    {
+        $someFeature = new SomeFeature($this);
+        $someFeature->alwaysOff();
+        $someFeature->turnOn();
+
+        $someFeature->someToggle();
+
+        $this->assertEquals('whenOff', $someFeature->invokedMethod());
     }
 }

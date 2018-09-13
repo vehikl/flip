@@ -96,6 +96,18 @@ abstract class Feature
         return $this;
     }
 
+    public function alwaysOff() : Feature
+    {
+        $this->forceState = self::DISABLED;
+
+        return $this;
+    }
+
+    public function hasForcedState() : bool
+    {
+        return $this->forceState !== null;
+    }
+
     public function isAlwaysOn() : bool
     {
         return $this->forceState === self::ENABLED;
