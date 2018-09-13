@@ -8,6 +8,7 @@ use Vehikl\Flip\DefaultResolver;
 use Vehikl\Flip\Feature;
 use Vehikl\Flip\Resolver;
 use Vehikl\Flip\Tests\SomeFeature;
+use Vehikl\Flip\Tests\SomeOtherFeature;
 
 /**
  * @backupStaticAttributes enabled
@@ -85,7 +86,7 @@ class FeatureTest extends TestCase
     public function test_a_resolver_can_be_registered_with_the_feature()
     {
         $resolver = new class() extends Resolver {
-            public function resolve($feature, string $method)
+            public function resolve(Feature $feature, string $method)
             {
             }
         };
@@ -122,5 +123,47 @@ class FeatureTest extends TestCase
         $someFeature->someToggle();
 
         $this->assertEquals('whenOff', $someFeature->invokedMethod());
+    }
+
+    public function test_features_forced_into_an_enabled_state_will_apply_to_all_features_of_the_same_type()
+    {
+        SomeFeature::alwaysOn();
+
+        $someFeature = new SomeFeature($this);
+        $anotherSomeFeature = new SomeFeature($this);
+        $someOtherFeature = new SomeOtherFeature($this);
+
+        $someFeature->turnOff();
+        $anotherSomeFeature->turnOff();
+        $someOtherFeature->turnOff();
+
+        $someFeature->someToggle();
+        $anotherSomeFeature->someToggle();
+        $someOtherFeature->someOtherToggle();
+
+        $this->assertEquals('whenOn', $someFeature->invokedMethod());
+        $this->assertEquals('whenOn', $someFeature->invokedMethod());
+        $this->assertEquals('whenSomeOtherToggleIsOff', $someOtherFeature->invokedMethod());
+    }
+
+    public function test_features_forced_into_a_disabled_state_will_apply_to_all_features_of_the_same_type()
+    {
+        SomeFeature::alwaysOff();
+
+        $someFeature = new SomeFeature($this);
+        $anotherSomeFeature = new SomeFeature($this);
+        $someOtherFeature = new SomeOtherFeature($this);
+
+        $someFeature->turnOn();
+        $anotherSomeFeature->turnOn();
+        $someOtherFeature->turnOn();
+
+        $someFeature->someToggle();
+        $anotherSomeFeature->someToggle();
+        $someOtherFeature->someOtherToggle();
+
+        $this->assertEquals('whenOff', $someFeature->invokedMethod());
+        $this->assertEquals('whenOff', $someFeature->invokedMethod());
+        $this->assertEquals('whenSomeOtherToggleIsOn', $someOtherFeature->invokedMethod());
     }
 }

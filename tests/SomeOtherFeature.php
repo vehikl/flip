@@ -6,6 +6,11 @@ use Vehikl\Flip\Feature;
 
 class SomeOtherFeature extends Feature
 {
+    protected static $forceState;
+
+    private $invokedMethod;
+    private $enabled = true;
+
     public function toggles(): array
     {
         return [
@@ -16,18 +21,33 @@ class SomeOtherFeature extends Feature
         ];
     }
 
+    public function turnOff() : void
+    {
+        $this->enabled = false;
+    }
+
+    public function turnOn() : void
+    {
+        $this->enabled = true;
+    }
+
     public function enabled(): bool
     {
-        return true;
+        return $this->enabled;
     }
 
-    public function whenSomeOtherToggleIsOn()
+    public function whenSomeOtherToggleIsOn() : string
     {
-        return 'whenSomeOtherToggleIsOn';
+        return $this->invokedMethod = 'whenSomeOtherToggleIsOn';
     }
 
-    public function whenSomeOtherToggleIsOff()
+    public function whenSomeOtherToggleIsOff() : string
     {
-        return 'whenSomeOtherToggleIsOff';
+        return $this->invokedMethod = 'whenSomeOtherToggleIsOff';
+    }
+
+    public function invokedMethod() : string
+    {
+        return $this->invokedMethod;
     }
 }

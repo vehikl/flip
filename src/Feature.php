@@ -12,7 +12,7 @@ abstract class Feature
 
     private static $resolver;
     protected $caller;
-    protected $forceState;
+    protected static $forceState;
 
     // Maybe it's worth requiring an interface be applied?
     public function __construct($caller)
@@ -89,27 +89,23 @@ abstract class Feature
         return $instance->{$method}($arguments);
     }
 
-    public function alwaysOn() : Feature
+    public static function alwaysOn() : void
     {
-        $this->forceState = self::ENABLED;
-
-        return $this;
+        static::$forceState = self::ENABLED;
     }
 
-    public function alwaysOff() : Feature
+    public static function alwaysOff() : void
     {
-        $this->forceState = self::DISABLED;
-
-        return $this;
+        static::$forceState = self::DISABLED;
     }
 
     public function hasForcedState() : bool
     {
-        return $this->forceState !== null;
+        return static::$forceState !== null;
     }
 
     public function isAlwaysOn() : bool
     {
-        return $this->forceState === self::ENABLED;
+        return static::$forceState === self::ENABLED;
     }
 }
