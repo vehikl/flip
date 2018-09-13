@@ -10,10 +10,10 @@ abstract class Resolver
             return $feature->isAlwaysOn();
         }
 
-        return $this->_resolve($feature, $method);
+        return $this->call($feature, $method);
     }
 
-    public function _resolve($feature, string $method)
+    protected function call($feature, string $method)
     {
         try {
             return $feature->{$method}();
